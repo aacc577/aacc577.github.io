@@ -20,6 +20,8 @@
     document.write(password()); 
 </SCRIPT>
 
+
+
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2604936542&auto=0&height=66"></iframe>
 	
 <html lang="zh-CN">
@@ -55,6 +57,24 @@
         }
     </style>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Typing List Effect</title>
+    <link rel="stylesheet" href="styles3.css">
+</head>
+<body>
+    <div class="typing-container">
+        <div class="typing-text" id="typingText"></div>
+        <div class="cursor" id="cursor"></div>
+    </div>
+
+    <script src="script3.js"></script>
+</body>
+</html>
+
 <!--
 <head>
     <meta charset="UTF-8">
@@ -70,58 +90,13 @@
 </body>
 </html>
 -->
-	    
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expandable/Collapsible List with Animation</title>
-    <style>
-        .list-container {
-            width: 300px;
-            margin: 0 auto;
-        }
-
-        .list-item {
-            cursor: pointer;
-            font-weight: bold;
-            padding: 8px;
-            margin: 4px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-
-        .nested-list {
-            margin-left: 20px;
-            padding-left: 20px;
-            border-left: 1px solid #ccc;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-        }
-
-        .indicator::before {
-            content: '▶';
-            display: inline-block;
-            transition: transform 0.3s ease;
-            margin-right: 8px;
-        }
-
-        .list-item.expanded .indicator::before {
-            transform: rotate(90deg);
-            content: '▼';
-        }
-
-        /* This class is used to set the max-height to a large value when expanding */
-        .expanded .nested-list {
-            max-height: 1000px; /* Adjust this value if your nested lists are very long */
-        }
-    </style>
+    <link rel="stylesheet" href="styles2.css">
 </head>
 <body>
 
@@ -132,11 +107,11 @@
             <li>此版本使用Save+Psk文件实现功能</li>
             <li>功能子追+减伤</li>
             <li>下载链接</li>
-	    <li>账号密码都是XLLLLNB-2024-11-19 </li> 
-	    <li><p><a href="https://www.123865.com/s/mN6Mjv-I28G3">测试文件123网盘下载(快)</a>提取码1145 </p><li>
-	    <li><p><a href="https://www.123865.com/s/mN6Mjv-iC8G3">测试配置1124-22-123网盘下载(快)</a>提取码1145 </p><li>
-	    <li><p><a href="https://www.123865.com/s/mN6Mjv-zC8G3">测试dk-XLLLLNB-123网盘下载(快)</a>提取码1145 </p><li>
-	    <li><p><a href="https://www.123865.com/s/mN6Mjv-LC8G3">测试直-123网盘下载(快)</a>提取码1145 </p><li>
+            <li>账号密码都是XLLLLNB-2024-11-19 </li> 
+            <li><p><a href="https://www.123865.com/s/mN6Mjv-I28G3">测试文件123网盘下载(快)</a>提取码1145 </p></li>
+            <li><p><a href="https://www.123865.com/s/mN6Mjv-iC8G3">测试配置1124-22-123网盘下载(快)</a>提取码1145 </p></li>
+            <li><p><a href="https://www.123865.com/s/mN6Mjv-zC8G3">测试dk-XLLLLNB-123网盘下载(快)</a>提取码1145 </p></li>
+            <li><p><a href="https://www.123865.com/s/mN6Mjv-LC8G3">测试直-123网盘下载(快)</a>提取码1145 </p></li>
         </ul>
     </div>
     <div class="list-item" onclick="toggleList(this)">
@@ -145,7 +120,7 @@
             <li>此版本功能只有FPS+++</li>
             <li>使用配置文件实现</li>
             <li>此版本已经 (不再更新)</li>
-            <li><a href="1110.7z">直接下载(比较慢)</a><li>
+            <li><a href="1110.7z">直接下载(比较慢)</a></li>
         </ul>
     </div>
     <div class="list-item" onclick="toggleList(this)">
@@ -153,28 +128,12 @@
         <ul class="nested-list">
             <li>现在已经无法使用</li>
             <li>不再提供</li>
-	    <li>已经无法下载</li>
-	    <li><a href="404.html">直接下载(比较慢)</a><li>
+            <li>已经无法下载</li>
+            <li><a href="404.html">直接下载(比较慢)</a></li>
         </ul>
     </div>
 </div>
 
-<script>
-    function toggleList(item) {
-        const nestedList = item.querySelector('.nested-list');
-        item.classList.toggle('expanded');
-
-        // Optionally, you can reset the max-height to 0 first to ensure a smooth transition
-        // when collapsing, but this is not always necessary depending on your layout
-        // nestedList.style.maxHeight = '0px';
-        // RequestAnimationFrame to ensure the style is applied before toggling the class
-        // requestAnimationFrame(() => {
-        //     item.classList.toggle('expanded');
-        // });
-
-        // However, in this case, the transition should work fine with just toggling the class
-    }
-</script>
-
+<script src="script2.js"></script>
 </body>
 </html>
