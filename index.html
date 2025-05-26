@@ -1,135 +1,132 @@
 <!DOCTYPE html>
-<SCRIPT language=JavaScript> 
-    function password() { 
-    var testV = 1; 
-    var pass1 = prompt('请输入服务器访问密码:',''); 
-    while (testV < 3) { 
-    if (!pass1) 
-    history.go(-1); 
-    if (pass1 == "1145") { 
-    alert('密码正确!'); 
-    break; 
-    } 
-    testV+=-1; 
-    var pass1 = prompt('密码错误!请重新输入:'); 
-    } 
-    if (pass1!="password" & testV ==3) 
-    history.go(-1); 
-    return " "; 
-    } 
-    document.write(password()); 
-</SCRIPT>
-
-
-
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=2604936542&auto=0&height=66"></iframe>
-	
 <html lang="zh-CN">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>标题</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f2f2f2;
-        }
-        h1 {
-            color: #333;
-            margin-top: 50px;
-        }
-        p {
-            color: #666;
-            margin: 20px 0;
-        }
-        button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-top: 30px;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-    </style>
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Typing List Effect</title>
-    <link rel="stylesheet" href="styles3.css">
+    <meta name="description" content="科技博客 - 探索技术与创新的前沿">
+    <meta name="keywords" content="科技, 博客, 前沿技术, Web开发, JavaScript, CSS3, HTML5">
+    <meta name="author" content="Your Name">
+    <title>科技博客 | 个人GitHub.io</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="typing-container">
-        <div class="typing-text" id="typingText"></div>
-        <div class="cursor" id="cursor"></div>
+    <!-- 加载动画 -->
+    <div class="loader">
+        <div class="loader-circle"></div>
+        <div class="loader-text">加载中...</div>
     </div>
 
-    <script src="script3.js"></script>
-</body>
-</html>
+    <!-- 粒子背景容器 -->
+    <div id="particles-js"></div>
+    
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 导航栏 -->
+        <nav class="navbar">
+            <div class="logo" id="typing-logo">-</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link" title="返回首页">首页</a></li>
+                <li><a href="#about" class="nav-link" title="关于我">关于</a></li>
+                <li><a href="#blog" class="nav-link" title="最新文章">博客</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
 
-<!--
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typing Animation</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="typing-container">
-        <span id="typing-text"></span>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
--->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expandable/Collapsible List with Animation</title>
-    <link rel="stylesheet" href="styles2.css">
-</head>
-<body>
+        <!-- 首页部分 -->
+        <section id="home" class="section" data-scroll="fade-in">
+            <div class="hero">
+                <h1 id="typing-text"></h1>
+                <p class="subtitle">探索技术与创新的前沿</p>
+                <a href="#blog" class="btn btn-primary">阅读博客</a>
+            </div>
+        </section>
 
-<div class="list-container">
-    <div class="list-item" onclick="toggleList(this)">
-        最新版本(👍推荐) <span class="indicator"></span>
-        <ul class="nested-list">
-            <li>此版本使用******实现功能</li>
-            <li>功能*******</li>
-            <li>下载链接</li>
-            <li><p><a href="NO">测试文件28-网盘下载(快)</a>提取码**** </p></li>
-        </ul>
-    </div>
-    <div class="list-item" onclick="toggleList(this)">
-        最安全版本(不是很推荐) <span class="indicator"></span>
-        <ul class="nested-list">
-            <li>此版本功能只有*****</li>
-            <li>使用*****</li>
-            <li>此版本已经 (不再更新)</li>
-            <li><a href="1145145">直接下载(比较慢)</a></li>
-        </ul>
-    </div>
-    <div class="list-item" onclick="toggleList(this)">
-        老版本(不推荐) <span class="indicator"></span>
-        <ul class="nested-list">
-            <li>现在已经无法使用</li>
-            <li>不再提供</li>
-            <li>已经无法下载</li>
-            <li><a href="404.html">直接下载(比较慢)</a></li>
-        </ul>
-    </div>
-</div>
+        <!-- 关于部分 -->
+        <section id="about" class="section" data-scroll="fade-in">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>我是一名热爱技术的开发者，专注于前沿科技和创新解决方案。</p>
+                    <p>在这个博客中，我将分享我的技术见解、项目经验和学习心得。</p>
+                </div>
+                <div class="tech-circles">
+                    <div class="tech-circle" data-tooltip="HTML5">
+                        <div class="inner-circle">
+                            <i class="fab fa-html5"></i>
+                        </div>
+                    </div>
+                    <div class="tech-circle" data-tooltip="CSS3">
+                        <div class="inner-circle">
+                            <i class="fab fa-css3-alt"></i>
+                        </div>
+                    </div>
+                    <div class="tech-circle" data-tooltip="JavaScript">
+                        <div class="inner-circle">
+                            <i class="fab fa-js"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<script src="script2.js"></script>
+        <!-- 博客部分 -->
+        <section id="blog" class="section" data-scroll="fade-in">
+            <h2 class="section-title">最新文章</h2>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="card-image" style="background-image: url('images/web.png');"></div>
+                    <div class="card-content">
+                        <h3>Web开发中的前沿技术</h3>
+                        <p>探索2025年最值得关注的Web开发趋势和技术。</p>
+                        <a href="assets/p1.html" class="btn btn-secondary">阅读更多</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="card-image" style="background-image: url('images/JavaScript.png');"></div>
+                    <div class="card-content">
+                        <h3>JavaScript性能优化</h3>
+                        <p>提升JavaScript应用性能的实用技巧和策略。</p>
+                        <a href="assets/p2.html" class="btn btn-secondary">阅读更多</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="card-image" style="background-image: url('images/CSS.png');"></div>
+                    <div class="card-content">
+                        <h3>CSS动画高级技巧</h3>
+                        <p>使用CSS创建令人印象深刻的动画效果。</p>
+                        <a href="assets/p3.html" class="btn btn-secondary">阅读更多</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>&copy; 2025 科技博客. 保留所有权利.</p>
+            <div class="social-links">
+                <a href="https://github.com/aacc577" class="social-link" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://space.bilibili.com/3546559207705501" class="social-link" aria-label="Twitter">
+                    <i class="fab fa-bilibili"></i>
+                </a>
+                <a href="/assets/game.html" class="social-link" aria-label="LinkedIn">
+                    <i class="fab fa-g"></i>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript文件 -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/typing.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

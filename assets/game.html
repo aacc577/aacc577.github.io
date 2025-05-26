@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏测试</title>
+    <style>
+        /* 保持原有样式不变 */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        #game-container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 2px solid #333;
+            overflow: hidden;
+        }
+        
+        #target {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ff5252;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+        }
+        
+        #target:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 82, 82, 0.7);
+        }
+        
+        #target.clicked {
+            animation: pop 0.3s ease-out;
+        }
+        
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        #score-display {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        
+        #start-btn, #restart-btn {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        #start-btn:hover, #restart-btn:hover {
+            background-color: #45a049;
+        }
+        
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            z-index: 10;
+            text-align: center;
+        }
+        
+        #timer {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+        
+        /* 新增反作弊提示样式 */
+        #anti-cheat-alert {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: red;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!--
+     .oooooo..o oooo         o8o      .       .
+    d8P'    `Y8 `888         `"'    .o8     .o8
+    Y88bo.       888 .oo.   oooo  .o888oo .o888oo oooo    ooo
+     `"Y8888o.   888P"Y88b  `888    888     888    `88.  .8'
+         `"Y88b  888   888   888    888     888     `88..8'
+    oo     .d8P  888   888   888    888 .   888 .    `888'
+    8""88888P'  o888o o888o o888o   "888"   "888"     .8'
+                                                  .o..P'
+                                                  `Y8P'
+                              .o8
+                             "888
+     .ooooo.   .ooooo.   .oooo888   .ooooo.
+    d88' `"Y8 d88' `88b d88' `888  d88' `88b
+    888       888   888 888   888  888ooo888
+    888   .o8 888   888 888   888  888    .o
+    `Y8bod8P' `Y8bod8P' `Y8bod88P" `Y8bod8P'
+    -->
+    <h1>点击方块Debug</h1>
+    <p>点击移动的红色方块获得分数！</p>
+    
+    <div id="score-display">分数: 0</div>
+    <div id="timer">时间: 30秒</div>
+    
+    <div id="game-container">
+        <div id="target"></div>
+        <div id="game-over">
+            <h2>游戏结束!</h2>
+            <p id="final-score">你的最终得分: 0</p>
+            <button id="restart-btn">再玩一次</button>
+        </div>
+    </div>
+    
+    <button id="start-btn">开始游戏</button>
+    
+    <!-- 新增反作弊警告弹窗 -->
+    <div id="anti-cheat-alert">
+        VACCX检测到可疑行为！游戏已终止。
+    </div>
+    
+    <script>
+        // 游戏变量
+        let score = 0;
+        let gameActive = false;
+        let gameSpeed = 3000; // 方块移动间隔(毫秒)
+        let minSpeed = 500;   // 最小移动间隔
+        let speedDecrease = 100; // 每次得分后速度减少量
+        let timeLeft = 30;    // 游戏时间(秒)
+        let timerInterval;
+        let targetInterval;
+        
+        // 反作弊检测变量
+        let lastClickTime = 0;
+        let minClickInterval = 100; // 最小合理点击间隔(毫秒)，调整为100ms以适应快速点击
+        let clickPattern = []; // 记录点击模式
+        let maxPatternLength = 10; // 最大记录点击次数
+        let suspiciousClicks = 0; // 可疑点击计数
+        let maxSuspiciousClicks = 3; // 最大允许可疑点击次数
+        let isCooldown = false; // 是否处于冷却状态
+        let cooldownDuration = 2000; // 冷却时间(毫秒)
+        
+        // 鼠标轨迹分析变量
+        let mousePositions = []; // 记录鼠标位置历史
+        let maxMousePositions = 20; // 最大记录鼠标位置数量
+        let mouseMoveThreshold = 50; // 鼠标移动阈值(像素)，低于此值认为移动不自然
+        
+        // DOM元素
+        const target = document.getElementById('target');
+        const gameContainer = document.getElementById('game-container');
+        const scoreDisplay = document.getElementById('score-display');
+        const startBtn = document.getElementById('start-btn');
+        const gameOver = document.getElementById('game-over');
+        const finalScore = document.getElementById('final-score');
+        const restartBtn = document.getElementById('restart-btn');
+        const timerDisplay = document.getElementById('timer');
+        const antiCheatAlert = document.getElementById('anti-cheat-alert');
+        
+        // 游戏区域尺寸
+        const containerWidth = gameContainer.offsetWidth;
+        const containerHeight = gameContainer.offsetHeight;
+        const targetSize = 50;
+        
+        // 初始化游戏
+        function initGame() {
+            score = 0;
+            timeLeft = 30;
+            gameActive = true;
+            gameSpeed = 3000;
+            scoreDisplay.textContent = `分数: ${score}`;
+            timerDisplay.textContent = `时间: ${timeLeft}秒`;
+            gameOver.style.display = 'none';
+            startBtn.style.display = 'none';
+            antiCheatAlert.style.display = 'none';
+            
+            // 重置反作弊检测
+            lastClickTime = 0;
+            clickPattern = [];
+            suspiciousClicks = 0;
+            isCooldown = false;
+            mousePositions = [];
+            
+            // 设置初始位置
+            moveTarget();
+            
+            // 开始游戏循环
+            targetInterval = setInterval(moveTarget, gameSpeed);
+            
+            // 开始计时器
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            // 启动反作弊检测
+            startAntiCheatDetection();
+            
+            // 添加鼠标移动监听
+            document.addEventListener('mousemove', trackMouseMovement);
+        }
+        
+        // 移动目标方块到随机位置(带动画)
+        function moveTarget() {
+            if (!gameActive) return;
+            
+            // 计算随机位置(确保完全在容器内)
+            const maxX = containerWidth - targetSize;
+            const maxY = containerHeight - targetSize;
+            
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            // 应用新位置(带过渡动画)
+            target.style.transition = 'left 0.3s, top 0.3s';
+            target.style.left = `${randomX}px`;
+            target.style.top = `${randomY}px`;
+            
+            // 动画结束后移除transition属性
+            setTimeout(() => {
+                target.style.transition = '';
+            }, 300);
+        }
+        
+        // 处理点击事件
+        function handleClick(event) {
+            if (!gameActive || isCooldown) return;
+            
+            const currentTime = Date.now();
+            
+            // 检查点击间隔是否合理
+            if (currentTime - lastClickTime < minClickInterval) {
+                suspiciousClicks++;
+                checkForCheating("快速点击");
+                return; // 忽略过快点击
+            }
+            
+            // 更新最后点击时间
+            lastClickTime = currentTime;
+            
+            // 记录点击位置(用于模式分析)
+            const rect = target.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const clickY = event.clientY - rect.top;
+            
+            // 只有点击在方块内部才有效
+            if (clickX >= 0 && clickX <= targetSize && clickY >= 0 && clickY <= targetSize) {
+                // 增加分数
+                score++;
+                scoreDisplay.textContent = `分数: ${score}`;
+                
+                // 添加点击动画
+                target.classList.add('clicked');
+                setTimeout(() => {
+                    target.classList.remove('clicked');
+                }, 300);
+                
+                // 加快游戏速度
+                if (gameSpeed > minSpeed) {
+                    gameSpeed -= speedDecrease;
+                    clearInterval(targetInterval);
+                    targetInterval = setInterval(moveTarget, gameSpeed);
+                }
+                
+                // 检查是否达到最高速度
+                if (gameSpeed < minSpeed) {
+                    gameSpeed = minSpeed;
+                }
+            } else {
+                // 点击在方块外部，可能是外挂尝试
+                suspiciousClicks++;
+                checkForCheating("点击外部");
+            }
+            
+            // 记录点击模式(相对位置)
+            const relativeX = clickX / targetSize;
+            const relativeY = clickY / targetSize;
+            clickPattern.push({x: relativeX, y: relativeY});
+            
+            // 保持模式数组长度
+            if (clickPattern.length > maxPatternLength) {
+                clickPattern.shift();
+            }
+        }
+        
+        // 跟踪鼠标移动
+        function trackMouseMovement(event) {
+            if (!gameActive) return;
+            
+            // 记录鼠标位置
+            mousePositions.push({
+                x: event.clientX,
+                y: event.clientY,
+                time: Date.now()
+            });
+            
+            // 限制记录数量
+            if (mousePositions.length > maxMousePositions) {
+                mousePositions.shift();
+            }
+            
+            // 分析鼠标轨迹
+            analyzeMouseTrajectory();
+        }
+        
+        // 分析鼠标轨迹
+        function analyzeMouseTrajectory() {
+            if (mousePositions.length < 2) return;
+            
+            // 获取最后两次鼠标位置
+            const lastPos = mousePositions[mousePositions.length - 1];
+            const prevPos = mousePositions[mousePositions.length - 2];
+            
+            // 计算鼠标移动距离
+            const dx = lastPos.x - prevPos.x;
+            const dy = lastPos.y - prevPos.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            // 如果移动距离过小，可能是脚本行为
+            //if (distance < mouseMoveThreshold) {
+            //    suspiciousClicks++;
+            //    checkForCheating("鼠标移动过小");
+            //}
+        }
+        
+        // 检查是否作弊
+        function checkForCheating(reason) {
+            if (suspiciousClicks >= maxSuspiciousClicks) {
+                // 检测到可疑模式
+                gameActive = false;
+                clearInterval(targetInterval);
+                clearInterval(timerInterval);
+                
+                // 显示作弊警告
+                antiCheatAlert.textContent = `VACCX检测到可疑行为 (${reason})！游戏已终止。`;
+                antiCheatAlert.style.display = 'flex';
+                
+                // 设置冷却时间
+                isCooldown = true;
+                setTimeout(() => {
+                    isCooldown = false;
+                }, cooldownDuration);
+                
+                // 3秒后隐藏警告(实际游戏中可能直接结束游戏)
+                //setTimeout(() => {
+                //    antiCheatAlert.style.display = 'none';
+                //}, 3000);
+            }
+        }
+        
+        // 更新计时器
+        function updateTimer() {
+            timeLeft--;
+            timerDisplay.textContent = `时间: ${timeLeft}秒`;
+            
+            if (timeLeft <= 0) {
+                endGame();
+            }
+        }
+        
+        // 结束游戏
+        function endGame() {
+            gameActive = false;
+            clearInterval(targetInterval);
+            clearInterval(timerInterval);
+            
+            finalScore.textContent = `你的最终得分: ${score}`;
+            gameOver.style.display = 'block';
+            startBtn.style.display = 'inline-block';
+            
+            // 停止反作弊检测
+            stopAntiCheatDetection();
+            
+            // 移除鼠标移动监听
+            document.removeEventListener('mousemove', trackMouseMovement);
+        }
+        
+        // 启动反作弊检测
+        function startAntiCheatDetection() {
+            // 监听点击事件
+            target.addEventListener('click', handleClick);
+        }
+        
+        // 停止反作弊检测
+        function stopAntiCheatDetection() {
+            target.removeEventListener('click', handleClick);
+        }
+        
+        // 事件监听器
+        startBtn.addEventListener('click', initGame);
+        restartBtn.addEventListener('click', initGame);
+        
+        // 定期分析点击模式(每1秒)
+        setInterval(() => {
+            if (gameActive) {
+                analyzeClickPattern();
+            }
+        }, 1000);
+        
+        // 分析点击模式(高级反作弊)
+        function analyzeClickPattern() {
+            if (clickPattern.length < 3) return;
+            
+            // 简单模式分析 - 检查点击是否过于规律
+            const xValues = clickPattern.map(p => p.x).sort();
+            const yValues = clickPattern.map(p => p.y).sort();
+            
+            // 检查x或y值是否过于接近(可能使用脚本固定点击位置)
+            const xDiff = xValues[xValues.length-1] - xValues[0];
+            const yDiff = yValues[yValues.length-1] - yValues[0];
+            
+            //if (xDiff < 0.1 || yDiff < 0.1) {
+            //    suspiciousClicks++;
+            //    checkForCheating("点击位置过于集中");
+            //}
+        }
+    </script>
+</body>
+</html>

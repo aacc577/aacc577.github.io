@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表情包生成器 - 制作你的专属表情包</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .meme-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin: 20px auto;
+            background-color: #e9f5ff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .meme-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .text-overlay {
+            position: absolute;
+            width: 80%;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: #ff5252;
+            transform: scale(1.05);
+        }
+        
+        select, input {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin: 5px;
+        }
+        
+        .emoji-picker {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .emoji {
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        
+        .emoji:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.1);
+        }
+        
+        .download-btn {
+            background-color: #4caf50;
+            margin-top: 10px;
+        }
+        
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!--
+        oooooooooooo
+        `888'     `8
+         888         oooo    ooo  .ooooo.  ooo. .oo.
+         888oooo8     `88.  .8'  d88' `88b `888P"Y88b
+         888    "      `88..8'   888ooo888  888   888
+         888       o    `888'    888    .o  888   888
+        o888ooooood8     `8'     `Y8bod8P' o888o o888o
+        oooo oooo    ooo  .ooooo.  oooo d8b  .oooo.o  .ooooo.
+         `88. `88.  .8'  d88' `88b `888""8P d88(  "8 d88' `88b
+          `88..]88..8'   888   888  888     `"Y88b.  888ooo888
+           `888'`888'    888   888  888     o.  )88b 888    .o
+            `8'  `8'     `Y8bod8P' d888b    8""888P' `Y8bod8P'
+                                  .o8
+                                 "888
+         .ooooo.   .ooooo.   .oooo888   .ooooo.
+        d88' `"Y8 d88' `88b d88' `888  d88' `88b
+        888       888   888 888   888  888ooo888
+        888   .o8 888   888 888   888  888    .o
+        `Y8bod8P' `Y8bod8P' `Y8bod88P" `Y8bod8P'
+        -->
+        <h1>🎉 表情包生成器 🎉</h1>
+        <p>制作属于你的专属表情包！添加文字、选择表情，然后下载分享吧！</p>
+        
+        <div class="meme-container">
+            <img id="memeImage" class="meme-image" src="https://source.unsplash.com/random/600x300/?funny" alt="随机表情包背景">
+            <div id="textOverlay" class="text-overlay">在这里输入文字</div>
+        </div>
+        
+        <div>
+            <input type="text" id="textInput" placeholder="输入你的文字...">
+            <select id="emojiSelect">
+                <option value="">选择表情</option>
+                <option value="😀">😀 开心</option>
+                <option value="😂">😂 笑哭</option>
+                <option value="😎">😎 酷</option>
+                <option value="🤔">🤔 思考</option>
+                <option value="😭">😭 哭泣</option>
+                <option value="😡">😡 生气</option>
+                <option value="🤯">🤯 炸裂</option>
+                <option value="👍">👍 点赞</option>
+            </select>
+            <button onclick="addEmoji()">添加表情</button>
+        </div>
+        
+        <div class="emoji-picker" id="emojiPicker" style="display: none;">
+            <!-- 表情将通过JavaScript动态添加 -->
+        </div>
+        
+        <button onclick="updateMeme()" class="download-btn">更新表情包</button>
+        <button onclick="downloadMeme()">下载表情包</button>
+    </div>
+
+    <script>
+        // 表情库
+        const emojis = [
+            '😀', '😂', '😎', '🤔', '😭', '😡', '🤯', '👍',
+            '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼',
+            '🍕', '🍔', '🍦', '🍩', '🍪', '🍰', '🍺', '🥤',
+            '👻', '👽', '🤖', '💩', '🌟', '🎉', '❤️', '💔'
+        ];
+        
+        // 显示表情选择器
+        document.getElementById('emojiSelect').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const picker = document.getElementById('emojiPicker');
+            picker.style.display = picker.style.display === 'none' ? 'flex' : 'none';
+        });
+        
+        // 点击页面其他地方关闭表情选择器
+        document.addEventListener('click', function() {
+            document.getElementById('emojiPicker').style.display = 'none';
+        });
+        
+        // 添加表情到选择器
+        emojis.forEach(emoji => {
+            const emojiBtn = document.createElement('div');
+            emojiBtn.className = 'emoji';
+            emojiBtn.textContent = emoji;
+            emojiBtn.addEventListener('click', function() {
+                document.getElementById('emojiSelect').value = emoji;
+                document.getElementById('emojiPicker').style.display = 'none';
+                addEmoji();
+            });
+            document.getElementById('emojiPicker').appendChild(emojiBtn);
+        });
+        
+        // 添加表情到文字
+        function addEmoji() {
+            const emoji = document.getElementById('emojiSelect').value;
+            if (emoji) {
+                const textInput = document.getElementById('textInput');
+                textInput.value += emoji;
+            }
+        }
+        
+        // 更新表情包
+        function updateMeme() {
+            const text = document.getElementById('textInput').value || "在这里输入文字";
+            document.getElementById('textOverlay').textContent = text;
+        }
+        
+        // 下载表情包
+        function downloadMeme() {
+            const memeImage = document.getElementById('memeImage');
+            const textOverlay = document.getElementById('textOverlay').textContent;
+            
+            // 创建Canvas
+            const canvas = document.createElement('canvas');
+            canvas.width = memeImage.naturalWidth;
+            canvas.height = memeImage.naturalHeight;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(memeImage, 0, 0);
+            
+            // 添加文字
+            ctx.font = '30px Comic Sans MS';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            
+            // 简单的文字换行处理
+            const maxWidth = canvas.width * 0.8;
+            const lineHeight = 35;
+            const words = textOverlay.split(' ');
+            let line = '';
+            
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, canvas.width / 2, 150);
+                    line = words[n] + ' ';
+                } else {
+                    line = testLine;
+                }
+            }
+            
+            ctx.fillText(line, canvas.width / 2, 150);
+            
+            // 创建下载链接
+            const link = document.createElement('a');
+            link.download = '我的表情包.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // 随机更换背景图片
+        document.getElementById('memeImage').addEventListener('click', function() {
+            const randomSrc = `https://source.unsplash.com/random/600x300/?funny,${Math.random()}`;
+            this.src = randomSrc;
+        });
+    </script>
+</body>
+</html>
