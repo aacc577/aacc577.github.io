@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         "欢迎来到我的个人科技博客",
         "Thank you for visiting my blog!",
         "感谢你访问我的博客！",
+        "...",
     ];
     let textIndex = 0;
     let charIndex = 0;
