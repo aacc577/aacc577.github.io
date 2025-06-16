@@ -1,79 +1,211 @@
 # 🌐 科技博客 | Tech Blog
-- 探索技术与创新的前沿，记录Web开发心得与前沿趋势
-# 📖 项目概述
-- 中文：  
-这是一个基于HTML5、CSS3和JavaScript构建的个人科技博客，托管于GitHub Pages。博客设计融合现代科技美学与功能性，包含动态粒子背景、打字机标题效果及响应式布局，支持多设备访问。页面包含“首页”、“关于”和“博客”板块
-- English:  
-personal tech blog built with HTML5, CSS3, and JavaScript, hosted on GitHub Pages. Designed with a modern tech aesthetic and functional features, including dynamic particle backgrounds, typewriter title effects, and responsive layouts for multi-device access. The site includes three core sections: "Home", "About", and "Blog"
-# 🛠️ 技术栈 (Tech Stack)
-- **前端基础**：HTML5 / CSS3 / JavaScript
-- **视觉特效**：[CSS动画 / 粒子背景](https://github.com/VincentGarreau/particles.js/) 
-- **字体**：Google Fonts（Orbitron、Roboto）
-- **图标**：Font Awesome 6  
-- **部署平台**：GitHub Pages  
-# 📂 文件结构
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Language-中文%20%7C%20English-blue" alt="Language">
+  <img src="https://img.shields.io/badge/Version-v1.0.0-brightgreen" alt="Version">
+  <img src="https://img.shields.io/badge/License-MIT-orange" alt="License">
+</div>
+
+> [中文版本在上方]   
+> [English version below]
+
+---
+
+## 📖 项目概述 (Project Overview)
+
+### 中文
+基于 HTML5/CSS3/JavaScript 构建的个人科技博客，托管于 GitHub Pages。特色包括：
+- 动态粒子背景（支持鼠标交互）
+- 打字机标题动画效果
+- 响应式三栏布局（首页/关于/博客）
+- 轻量化设计（代码总大小 < 1MB）
+
+### English
+Personal tech blog built with HTML5/CSS3/JS, hosted on GitHub Pages. Features:
+- Dynamic particle backgrounds (mouse-interactive)
+- Typewriter title animations
+- Responsive 3-section layout
+- Lightweight design (Code Total size <1MB total)
+
+---
+
+## 🛠️ 技术栈 (Tech Stack)
+
+| 类别       | 中文说明                  | English Description          |
+|------------|--------------------------|-----------------------------|
+| 前端基础   | HTML5 / CSS3 / JavaScript | HTML5 / CSS3 / JavaScript   |
+| 视觉特效   | CSS 动画 / 粒子背景       | CSS Animations / Particles.js |
+| 字体       | Google Fonts (Orbitron/Roboto) | Google Fonts (Orbitron/Roboto) |
+| 图标       | Font Awesome 6           | Font Awesome 6              |
+| 部署平台   | GitHub Pages             | GitHub Pages                |
+
+---
+
+## 📂 文件结构 (File Structure)
+
+```bash
+username.github.io/
+├── index.html                 # 主页面|Main page
+├── css/
+│   └── style.css              # 主样式文件|Main style file
+├── js/
+│   ├── particles.js           # 粒子效果|Particle effect
+│   ├── main.js                # 主逻辑|Main logic
+│   └── typing.js              # 打字机效果|Typewriter effect
+├── images/
+│   └── placeholder.jpg        # 示例图片|Sample picture
+└── assets/                    # 其他资源|Other resources
 ```
-username.github.io/  
-├── index.html                 # 主页面  
-├── css/                       # 样式文件夹  
-│   └── style.css              # 主样式文件  
-├── js/                        # JavaScript文件夹  
-│   ├── particles.js           # 粒子效果脚本  
-│   ├── main.js                # 主逻辑脚本  
-│   └── typing.js              # 打字机效果脚本  
-├── images/                    # 图片资源  
-│   └── placeholder.jpg        # 示例图片（需替换）  
-└── assets/                    # 其他资源  
+
+---
+
+## 🚀 功能特点 (Features)
+
+### 中文
+- 🌌 动态粒子背景（鼠标吸附效果）
+- ⌨️ 打字机标题轮播
+- 📱 响应式设计（支持手机/平板/桌面）
+- 🖱️ 平滑滚动导航
+- 🎨 渐变色 UI 设计
+
+### English
+- 🌌 Dynamic particle backgrounds
+- ⌨️ Typewriter title carousel
+- 📱 Responsive layout
+- 🖱️ Smooth scrolling navigation
+- 🎨 Gradient UI design
+
+---
+
+## 📝 内容板块 (Sections)
+
+| 板块     | 中文描述                  | English Description          |
+|----------|--------------------------|-----------------------------|
+| 首页     | 动态标题 + 博客简介       | Hero section with dynamic title |
+| 关于     | 个人简介 + 技术栈图标     | About section with tech stack icons |
+| 博客     | 3 篇示例文章卡片          | 3 sample blog cards         |
+
+---
+
+## 🛠️ 本地运行指南 (Local Setup)
+
+```bash
+# 克隆仓库
+# Clone repository
+git clone https://github.com/aacc577/aacc577.github.io.git
+
+# 进入目录
+# Enter the directory
+cd aacc577.github.io
+
+# 运行（直接打开 index.html）
+# Run (open index.html directly)
+# 或部署到 GitHub Pages
+# Or deploy to GitHub Pages
 ```
-# 🚀 功能特点
-- 动态粒子背景：鼠标悬停交互 + 粒子吸附效果（轻量级）  
-- 打字机标题动画：首页标题轮播 + Logo逐字打印效果  
-- 响应式设计：适配桌面、平板及移动端  
-- 平滑滚动导航：点击导航栏快速定位内容  
-- 滚动动画：内容渐入视差效果  
-- 简约科技风UI：渐变色、浮动元素与微交互  
-# 📝 内容板块
-- 首页：动态标题 + 博客简介 + "阅读博客"按钮  
-- 关于：个人简介 + 技术栈图标（HTML5/CSS3/JS）  
-- 博客：三篇示例文章卡片（含图片、标题、摘要及链接）  
-# 🛠️ 本地运行指南
-克隆仓库到本地：  
-```git
-git clone https://github.com/yourusername/username.github.io.git
-```
-用浏览器直接打开 index.html 文件，或部署至GitHub Pages查看效果。  
-注意：  
-- 替换 images/placeholder.jpg 为您的实际图片  
-- 更新示例文章中的链接为真实内容  
-- 🌍 部署说明
-将代码推送至 main 分支  
-[访问](https://aacc577.github.io)即可查看在线版本  
-🧩 自定义与扩展
-修改颜色主题：调整 style.css 中的 :root CSS变量  
-添加新文章：在 index.html 的博客板块复制卡片模板  
-更换粒子效果：修改 js/particles.js 中的配置参数  
-# ❓ 常见问题
-- Q1: 页面加载时出现闪烁？  
-A: 确保`style.css`已正确加载，检查控制台是否有CSS/JS报错。  
-- Q2: 粒子动画卡顿？  
-A: 减少`particles.js`中的`particles.number.value`数值（默认100）。  
-- Q3: 如何更换博客文章链接？  
-A: 直接编辑`index.html`中`<a href="...">`标签的URL地址。  
-# 🤝 贡献指南
-- 欢迎通过Pull Request提交改进：  
-- Fork 仓库  
-- 创建新分支
-- `git checkout -b feature/your-feature`
-- 提交修改
-- `git commit -m "Add new feature"`
-- 推送到分支
-- `git push origin feature/your-feature`
-- 发起
-- `Pull Request`
-- 注意：请遵循代码风格一致性，添加必要注释。  
-# 📜 许可证
-- MIT License © 2025 
-- [保留所有权利](https://github.com/aacc577)
-- 最后更新：2025年6月  
-- 版本：v1.0.0  
-- 文件：README.md
+
+**注意事项**：
+1. 替换 `images/placeholder.jpg`
+2. 更新文章链接为真实 URL
+3. 部署到 GitHub Pages 的 main 分支
+
+**Precautions（English）**:
+1. Replace `images/placeholder.jpg`
+2. Update the article link to be a genuine URL
+3. Deploy to the main branch of GitHub Pages
+
+---
+
+## ❓ 常见问题 (FAQ)
+
+<details>
+<summary><strong>Q1: 页面加载闪烁怎么办？</strong></summary>
+<p>A: 检查 style.css 是否正确加载，查看浏览器控制台是否有报错。</p>
+</details>
+
+<details>
+<summary><strong>Q1: What should I do if the page flickers during loading?</strong></summary>
+<p>A: Check if style.css is loaded correctly and look for any errors in the browser console.</p>
+</details>
+
+<details>
+<summary><strong>Q2: 粒子动画卡顿？</strong></summary>
+<p>A: 减少 particles.js 中的 `particles.number.value`（默认 100）</p>
+</details>
+
+<details>
+<summary><strong>Q2: The particle animation is lagging?</strong></summary>
+<p>A: Reduce the `particles.number.value` in particles.js (default is 100)</p>
+</details>
+
+<details>
+<summary><strong>Q3: 如何修改文章链接？</strong></summary>
+<p>A: 直接编辑index.html中的a href=标签</p>
+</details>
+
+<details>
+<summary><strong>Q3: How do I modify the article links?</strong></summary>
+<p>A: Directly edit the `a href=` tags in index.html</p>
+</details>
+
+---
+
+## 🤝 贡献指南 (Contributing)
+
+<strong>中文版</strong>
+
+1. Fork 仓库
+2. 创建分支：`git checkout -b feature/your-feature`
+3. 提交修改：`git commit -m "Add new feature"`
+4. 推送分支：`git push origin feature/your-feature`
+5. 发起 Pull Request
+
+**要求**：
+- 代码风格一致
+- 添加必要注释
+- 通过 ESLint 检查
+</details>
+
+<strong>English Version</strong>
+
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/your-feature`
+3. Commit your changes: `git commit -m "Add new feature"`
+4. Push the branch: `git push origin feature/your-feature`
+5. Open a Pull Request
+
+**Requirements**:
+- Consistent code style
+- Add necessary comments
+- Pass ESLint checks
+</details>
+
+---
+
+## 📜 许可证 (License)
+
+<strong>中文版</strong>
+<div style="display: flex; gap: 20px; align-items: center;">
+  <div>
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
+  </div>
+  <div>
+    <p>MIT License © 2025<br>
+    保留所有权利 | <a href="https://github.com/aacc577">GitHub</a><br>
+    最后更新：2025 年 6 月</p>
+  </div>
+</div>
+</details>
+
+<strong>English Version</strong>
+<div style="display: flex; gap: 20px; align-items: center;">
+  <div>
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="MIT License">
+  </div>
+  <div>
+    <p>MIT License © 2025<br>
+    All rights reserved | <a href="https://github.com/aacc577">GitHub</a><br>
+    Last updated: June 2025</p>
+  </div>
+</div>
+</details>
